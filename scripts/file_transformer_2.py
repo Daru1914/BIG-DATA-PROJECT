@@ -16,10 +16,10 @@ with open('output/out.csv', 'w') as f_out:
         for line in f_in:
             # split line by comma
             line_parts = line.strip().split(',')
-            # join all items except last as a single string
-            NEW_LINE = '-'.join(line_parts[:-1]).strip()
+            # join all items except last two as a single string
+            NEW_LINE = '-'.join(line_parts[:-2]).strip()
             # add the last item to the new line
-            NEW_LINE += ',' + line_parts[-1].strip()
+            NEW_LINE += ',' + line_parts[-2].strip() + ',' + line_parts[-1].strip()
             # write new line to output file
             f_out.write(NEW_LINE + '\n')
 
