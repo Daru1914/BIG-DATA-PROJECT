@@ -171,9 +171,8 @@ rmse = evaluator.evaluate(predictions)
 
 print("LR's cross-val's Root Mean Squared Error (RMSE) on test data = %g" % rmse)
 # Get the best model hyperparameters
-best_lr_model_params = MODEL.bestModel.extractParamMap()
-reg_param = best_lr_model_params[MODEL.RegParam]
-elastic_net_param = best_lr_model_params[MODEL.ElasticNetParam]
+reg_param = MODEL.bestModel.extractParamMap()[MODEL.bestModel.getParam("regParam")]
+elastic_net_param = MODEL.bestModel.extractParamMap()[MODEL.bestModel.getParam("elasticNetParam")]
 print("Best LR hyperparameters: regParam = %g, elasticNetParam = %g"\
       % (reg_param, elastic_net_param))
 
@@ -187,6 +186,7 @@ rmse = evaluator.evaluate(predictions, {evaluator.metricName: 'rmse'})
 r2 = evaluator.evaluate(predictions, {evaluator.metricName: 'r2'})
 print("LR RMSE: {}".format(rmse))
 print("LR R^2: {}".format(r2))
+lrModel.save("model")
 
 # Create a DecisionTreeRegressor object
 dt = DecisionTreeRegressor()
@@ -208,9 +208,8 @@ cvRmse = evaluator.evaluate(cvPredictions)
 print("DTR's cross-val's Root Mean Squared Error (RMSE) on test data = %g" % cvRmse)
 
 # Get the best model hyperparameters
-best_dtr_model_params = CV_MODEL.bestModel.extractParamMap()
-max_depth = best_lr_model_params[CV_MODEL.MaxDepth]
-min_instances_per_node = best_lr_model_params[CV_MODEL.MinInstancesPerNode]
+max_depth = CV_MODEL.bestModel.extractParamMap()[CV_MODEL.bestModel.getParam("maxDepth")]
+min_instances_per_node = CV_MODEL.bestModel.extractParamMap()[CV_MODEL.bestModel.getParam("minInstancesPerNode")]
 print("Best DTR hyperparameters: maxDepth = %g, minInstancesPerNode = %g" \
       % (max_depth, min_instances_per_node))
 
@@ -223,6 +222,7 @@ dtrRmse = evaluator.evaluate(dtrPredictions, {evaluator.metricName: 'rmse'})
 dtrR2 = evaluator.evaluate(dtrPredictions, {evaluator.metricName: 'r2'})
 print("DTR RMSE: {}".format(dtrRmse))
 print("DTR R2: {}".format(dtrR2))
+dtrModel.save("model")
 
 # save the outputs
 predictions.coalesce(1).select("prediction",'label').write.mode("overwrite")\
