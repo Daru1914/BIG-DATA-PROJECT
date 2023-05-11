@@ -8,8 +8,8 @@ IN = sys.argv[1]
 with open('output/out.csv', 'w') as f_out:
     with open(IN, 'r') as f_in:
         # skip header
-        header = next(f_in)
-        f_out.write(header)
+        HEADER = next(f_in)
+        f_out.write(HEADER)
         for line in f_in:
             # split line by comma
             line_parts = line.strip().split(',')
