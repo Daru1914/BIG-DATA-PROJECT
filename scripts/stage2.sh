@@ -35,7 +35,8 @@ cat /root/q6/* >> output/q6.csv
                                                                                                                                                                         
 hive -f sql/q7.hql                                                                                                                                                      
 echo "name,category,avg_price" > output/q7.csv                                                                                                                          
-cat /root/q7/* >> output/q7.csv                                                                                                                                         
+cat /root/q7/* >> output/q7.csv        
+python scripts/file_transformer.py output/q7.csv                                                                                                                                     
                                                                                                                                                                         
 hive -f sql/q8.hql                                                                                                                                                      
 echo "category,count" > output/q8.csv                                                                                                                                   
