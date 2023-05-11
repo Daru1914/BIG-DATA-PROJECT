@@ -3,13 +3,10 @@ This module cleans up after messy write to csv from the cmd
 """
 import os
 import sys
+IN = sys.argv[1]
 
-# specify input and output file paths
-INPUT = sys.argv[1]
-
-# read input file and write output file
 with open('output/out.csv', 'w') as f_out:
-    with open(INPUT, 'r') as f_in:
+    with open(IN, 'r') as f_in:
         # skip header
         header = next(f_in)
         f_out.write(header)
@@ -24,7 +21,7 @@ with open('output/out.csv', 'w') as f_out:
             f_out.write(NEW_LINE + '\n')
 
 # remove old file
-os.remove(INPUT)
+os.remove(IN)
 
 # rename output file as old file name
-os.rename('output/out.csv', INPUT)
+os.rename('output/out.csv', IN)

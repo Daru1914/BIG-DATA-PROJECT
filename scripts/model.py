@@ -209,7 +209,8 @@ print("DTR's cross-val's Root Mean Squared Error (RMSE) on test data = %g" % cvR
 
 # Get the best model hyperparameters
 max_depth = CV_MODEL.bestModel.extractParamMap()[CV_MODEL.bestModel.getParam("maxDepth")]
-min_instances_per_node = CV_MODEL.bestModel.extractParamMap()[CV_MODEL.bestModel.getParam("minInstancesPerNode")]
+min_instances_per_node = CV_MODEL.bestModel.extractParamMap()[CV_MODEL.bestModel.\
+                                                              getParam("minInstancesPerNode")]
 print("Best DTR hyperparameters: maxDepth = %g, minInstancesPerNode = %g" \
       % (max_depth, min_instances_per_node))
 
