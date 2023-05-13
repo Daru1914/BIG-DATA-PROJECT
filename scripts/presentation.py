@@ -21,7 +21,7 @@ Q110 = pd.read_csv("output/q10.csv")
 
 st.write("# Big Data Project  \n ## Food Price Prediction  \n", "*Year*: **2023**\
  \n" "*Team*: **Nikolay Pavlenko, Ashera Dyussenova** \n")
-st.header(body="Data Characteristics")
+st.header(body="Data Characteristics", element=None)
 # Display the descriptive information of the dataframe
 # rests_cols = rests.dtypes
 REST_DESC = RESTS.describe()
@@ -35,7 +35,7 @@ st.write("This dataset contains over 40,000 Restaurants and their\
           'restaurant-menus.csv' with over 3.71 million menu entries,\
           including the restaurant ID, menu category, name, description, and price.\
           It's a valuable resource for food enthusiasts, researchers, and industry analysts.")
-st.subheader(body="restaurants.csv")
+st.subheader(body="restaurants.csv", element=None)
 st.write("""restaurants.csv (40k+ entries, 11 columns) \n
 id (Restaurant id) - int\n
 position (Restaurant position in the search result) - int\n
@@ -51,7 +51,7 @@ lat (Latitude)- str\n
 long (Longitude) - str\n""")
 st.write(REST_DESC)
 
-st.subheader(body="menus.csv")
+st.subheader(body="menus.csv", element=None)
 st.write("""restaurant-menus.csv (3.71M entries, 5 columns)\n
 restaurant_id (Restaurant id) - int\n
 category (Menu category) - str\n
@@ -60,18 +60,18 @@ description (Menu description) - str\n
 price (Menu price) - str\n""")
 st.write(MENU_DESC)
 
-st.subheader(body='Some samples from the data')
-st.markdown(body='`restaurants` table')
+st.subheader(body='Some samples from the data', element=None)
+st.markdown(body='`restaurants` table', element=None)
 st.write(RESTS.head(5))
-st.markdown(body="`restaurant-menus` table")
+st.markdown(body="`restaurant-menus` table", element=None)
 st.write(MENUS.head(5))
 
 
-st.header(body="EDA and Insights")
+st.header(body="EDA and Insights", element=None)
 st.write("We ran several queries against our data to better understand it and \
          were able to gather some insights into it.")
 
-st.subheader(body="1.Count the number of restaurants in each category")
+st.subheader(body="1.Count the number of restaurants in each category", element=None)
 CHART = alt.Chart(Q1.sort_values(by='num_restaurants', ascending=False).head(10))\
     .mark_circle().encode(
         x='category:N',
@@ -94,7 +94,7 @@ def unclicked():
     print "."
     # st.balloons()
 
-if st.button(label='Show picture'):
+if st.button(label='Show picture', element=None):
     clicked()
 else:
     unclicked()
@@ -102,21 +102,21 @@ else:
 st.code(body="""SELECT category, COUNT(*) AS num_restaurants
 FROM restaurants
 GROUP BY category
-ORDER BY num_restaurants DESC;""", language='sql')
+ORDER BY num_restaurants DESC;""", language='sql', element=None)
 
 st.write("Top 10 categories by restaurant number. We can see that\
          traditional American and Mexican restaurants are the most popular.")
 
 
 
-st.subheader(body="2.Find the top-rated restaurants in each category")
+st.subheader(body="2.Find the top-rated restaurants in each category", element=None)
 CHART = alt.Chart(Q2).mark_circle().encode(
     x='category', y='name', size='score', color='score',
     tooltip=['category', 'name', 'score'])
 # Display the chart
 # chart.show()
 
-if st.button(label='Show picture '):
+if st.button(label='Show picture ', element=None):
     clicked()
 else:
     unclicked()
@@ -125,13 +125,13 @@ st.code(body="""SELECT category, name, score
 FROM restaurants
 WHERE score IS NOT NULL
 ORDER BY score DESC
-LIMIT 10;""", language='sql')
+LIMIT 10;""", language='sql', element=None)
 
 st.write("On the chart we can see the best restaurants in their categories.")
 
 
 
-st.subheader(body="3.Find the most popular menu items across all restaurants")
+st.subheader(body="3.Find the most popular menu items across all restaurants", element=None)
 CHART = alt.Chart(Q4)\
     .mark_circle().encode(
         x='name:N',
@@ -140,7 +140,7 @@ CHART = alt.Chart(Q4)\
 # Display the chart
 # chart.show()
 
-if st.button(label='Show pictur '):
+if st.button(label='Show pictur ', element=None):
     clicked()
 else:
     unclicked()
@@ -149,14 +149,14 @@ st.code(body="""SELECT name, COUNT(*) AS num_occurrences
 FROM menus
 GROUP BY name
 ORDER BY num_occurrences DESC
-LIMIT 10;""", language='sql')
+LIMIT 10;""", language='sql', element=None)
 
 st.write("On the chart we can see the most popular foods in America - \
          bottled water and French fries are by far the most popular foods.")
 
 
 
-st.subheader(body="4.Find the number of restaurants in each zip code")
+st.subheader(body="4.Find the number of restaurants in each zip code", element=None)
 CHART = alt.Chart(Q5.iloc[2:120])\
     .mark_circle().encode(
         x='zip_code:Q',
@@ -165,7 +165,7 @@ CHART = alt.Chart(Q5.iloc[2:120])\
 # Display the chart
 # chart.show()
 
-if st.button(label='Show pict.'):
+if st.button(label='Show pict.', element=None):
     clicked()
 else:
     unclicked()
@@ -173,18 +173,18 @@ else:
 st.code(body="""SELECT zip_code, COUNT(*) AS num_restaurants
 FROM restaurants
 GROUP BY zip_code
-ORDER BY num_restaurants DESC;""", language='sql')
+ORDER BY num_restaurants DESC;""", language='sql', element=None)
 
 st.write("On the chart we can see that most of the restaurants are clustered\
          together in close proximity to each other, as similar zip indices suggest.")
 
 
 
-st.subheader(body="5.Names of restaurants with the word \"pizza\" in the food")
+st.subheader(body="5.Names of restaurants with the word \"pizza\" in the food", element=None)
 # Display the chart
 # chart.show()
 
-if st.button(label='Show names:'):
+if st.button(label='Show names:', element=None):
     st.write(Q6.sample(10))
 else:
     unclicked()
@@ -192,21 +192,22 @@ else:
 st.code(body="""SELECT DISTINCT r.name
 FROM restaurants r
 JOIN menus m ON r.id = m.restaurant_id
-WHERE LOWER(m.name) LIKE '%pizza%';""", language='sql')
+WHERE LOWER(m.name) LIKE '%pizza%';""", language='sql', element=None)
 
 st.write("We get a sample of places you can get a pizza at in the US\
           - not all of them are Italian.")
 
 
 
-st.subheader(body="6.Find the average price of menu items for each category at a given restaurant")
+st.subheader(body="6.Find the average price of menu items for each category at a given restaurant"
+             , element=None)
 # Display the chart
 # chart.show()
 CHART = alt.Chart(Q7).mark_circle().encode(
     x='category', y='name', size='avg_price', color='avg_price',
     tooltip=['category', 'name', 'avg_price'])
 
-if st.button(label='Show pic:'):
+if st.button(label='Show pic:', element=None):
     clicked()
 else:
     unclicked()
@@ -216,14 +217,15 @@ st.code(body="""SELECT r.name, m.category, AVG(CAST(REGEXP_REPLACE\
 FROM restaurants r                                                                                                                                                  
 JOIN menus m ON r.id = m.restaurant_id                                                                                                                             
 WHERE r.name = 'Golden Temple Vegetarian Cafe'                                                                                                                    
-GROUP BY r.name, m.category;""", language='sql')
+GROUP BY r.name, m.category;""", language='sql', element=None)
 
 st.write("We get a sample of prices for specific food stuffs at\
          Golden Temple Vegetarian Cafe.")
 
 
 
-st.subheader(body="7.Get the top 5 most common menu categories across all restaurants")
+st.subheader(body="7.Get the top 5 most common menu categories across all restaurants"
+             , element=None)
 # Display the chart
 # chart.show()
 CHART = alt.Chart(Q8)\
@@ -232,7 +234,7 @@ CHART = alt.Chart(Q8)\
         y='count:Q'
     )
 
-if st.button(label='Show funny picture:'):
+if st.button(label='Show funny picture:', element=None):
     clicked()
 else:
     unclicked()
@@ -242,7 +244,7 @@ FROM restaurants r
 JOIN menus m ON r.id = m.restaurant_id
 GROUP BY m.category
 ORDER BY count DESC
-LIMIT 5;""", language='sql')
+LIMIT 5;""", language='sql', element=None)
 
 st.write("We can see that most restaurants in America pick for you.")
 
@@ -250,7 +252,7 @@ st.write("We can see that most restaurants in America pick for you.")
 
 st.subheader(body="8.Find the restaurants with the highest average rating\
               that have at least one menu item with the word \"burger\"\
-              in the name")
+              in the name", element=None)
 # Display the chart
 # chart.show()
 CHART = alt.Chart(Q9.head(10))\
@@ -259,7 +261,7 @@ CHART = alt.Chart(Q9.head(10))\
         y='avg_rating:Q'
     )
 
-if st.button(label='Show picture:   '):
+if st.button(label='Show picture:   ', element=None):
     clicked()
 else:
     unclicked()
@@ -270,21 +272,21 @@ JOIN menus m ON r.id = m.restaurant_id
 WHERE LOWER(m.name) LIKE '%burger%'
 GROUP BY r.name
 ORDER BY avg_rating DESC;
-""", language='sql')
+""", language='sql', element=None)
 
 st.write("Among the top-rated burger restaurants in America we can see both popular\
          international brands and smaller lesser-known ones.")
 
 
 
-st.subheader(body="9.Get the top 10 most expensive menu items across all restaurants")
+st.subheader(body="9.Get the top 10 most expensive menu items across all restaurants", element=None)
 # Display the chart
 # chart.show()
 CHART = alt.Chart(Q110).mark_circle().encode(
     x='restaurant_name', y='dish_name', size='price', color='price',
     tooltip=['restaurant_name', 'dish_name', 'price'])
 
-if st.button(label='Show picture:    '):
+if st.button(label='Show picture:    ', element=None):
     clicked()
 else:
     unclicked()
@@ -295,13 +297,13 @@ FROM restaurants r
 JOIN menus m ON r.id = m.restaurant_id
 ORDER BY CAST(REGEXP_REPLACE(m.price, 'USD', '') AS FLOAT) DESC
 LIMIT 10;
-""", language='sql')
+""", language='sql', element=None)
 
 st.write("Due to the limit of 10 queries there is really not much of an insight we can get\
          besides the fact that there is a person who decided to name his restaurant\
          \"buybuy BABY\".")
 
-st.header(body="Models' Performance Results")
+st.header(body="Models' Performance Results", element=None)
 
 st.write("Performing 4-fold cross-validation with grid search, we have found the following\
          hyperparameters for the best models:")
@@ -323,10 +325,10 @@ st.write("Judging those values, we can conclude that both models perform pretty 
 LR_PREDICTIONS = pd.read_csv("output/lr_pred/%s" % os.listdir("output/lr_pred")[0])
 DTR_PREDICTIONS = pd.read_csv("output/dtr_pred/%s" % os.listdir("output/dtr_pred")[0])
 
-st.header(body="Model predictions")
+st.header(body="Model predictions", element=None)
 
-st.subheader(body="LR predictions")
+st.subheader(body="LR predictions", element=None)
 st.table(LR_PREDICTIONS.head(10))
 
-st.subheader(body="DTR predictions")
+st.subheader(body="DTR predictions", element=None)
 st.table(DTR_PREDICTIONS.head(10))

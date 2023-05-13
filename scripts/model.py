@@ -48,16 +48,17 @@ MENUS_POST_PROCESS = MENUS.select(FEATURES_MENUS)
 # dropping rows with no score or ratings data
 RESTAURANTS_POST_PROCESS = RESTAURANTS.select(FEATURES_RESTAURANTS)
 print 'Before dropping nans: ' + str(RESTAURANTS_POST_PROCESS.count())
-RESTAURANTS_POST_PROCESS = RESTAURANTS_POST_PROCESS.filter((F.col('score') != "")\
-                                                            & (F.col('ratings') != "")\
-                                                            & (F.col('price_range') != ""))
+RESTAURANTS_POST_PROCESS = RESTAURANTS_POST_PROCESS\
+    .filter((RESTAURANTS_POST_PROCESS.score != "")\
+             & (RESTAURANTS_POST_PROCESS.ratings != "")\
+             & (RESTAURANTS_POST_PROCESS.price_range != ""))
 print 'After dropping nans: ' + str(RESTAURANTS_POST_PROCESS.count())
 
 # transform score, ratings, lat and lng to numeric
 FLOATY_FEATURES = ['score', 'ratings', 'lat', 'lng']
 for column in FLOATY_FEATURES:
     RESTAURANTS_POST_PROCESS = RESTAURANTS_POST_PROCESS\
-        .withColumn(column, F.col(column).cast('float'))
+        .withColumn(column, RESTAURANTS_POST_PROCESS.column.cast('float'))
 
 # convert category column to list, explode it, one-hot encode later
 RESTAURANTS_POST_PROCESS = RESTAURANTS_POST_PROCESS\
@@ -115,7 +116,7 @@ TEST_DF = TEST_DF.drop("category", "name", "category_tokens", "name_tokens")
 
 REGEX_PATTERN = r'^(\d+\.\d+)'
 TEST_DF = TEST_DF\
-    .withColumn('label', F.regexp_extract(F.col('price'), REGEX_PATTERN, 1).cast('float'))
+    .withColumn('label', F.regexp_extract(TEST_DF.price, REGEX_PATTERN, 1).cast('float'))
 FINAL_DF = TEST_DF.drop('price')
 
 # 70-30 split
