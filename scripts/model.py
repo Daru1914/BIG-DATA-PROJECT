@@ -58,7 +58,7 @@ print 'After dropping nans: ' + str(RESTAURANTS_POST_PROCESS.count())
 FLOATY_FEATURES = ['score', 'ratings', 'lat', 'lng']
 for column in FLOATY_FEATURES:
     RESTAURANTS_POST_PROCESS = RESTAURANTS_POST_PROCESS\
-        .withColumn(column, RESTAURANTS_POST_PROCESS.column.cast('float'))
+        .withColumn(column, RESTAURANTS_POST_PROCESS[column].cast('float'))
 
 # convert category column to list, explode it, one-hot encode later
 RESTAURANTS_POST_PROCESS = RESTAURANTS_POST_PROCESS\
