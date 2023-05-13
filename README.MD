@@ -1,3 +1,5 @@
+**NOTE FOR THE EVALUATOR:** If we were forbidden from updating the repository after the Thursday deadline, please check the thursday_version branch of the repository for the evaluation. We have fixed the pylint for python 2.7 errors and stage 4 deployment in the main branch after midnight on Thursday.
+
 This repository is a template for the final project of big data course in IU-2023. It contains the following directories:
 
 - `data/` contains the dataset files.
