@@ -187,7 +187,7 @@ RMSE = EVALUATOR.evaluate(PREDICTIONS, {EVALUATOR.metricName: 'rmse'})
 R2 = EVALUATOR.evaluate(PREDICTIONS, {EVALUATOR.metricName: 'r2'})
 print "LR RMSE: {}".format(RMSE)
 print "LR R^2: {}".format(R2)
-LR_MODEL.write().overwrite().save("model")
+LR_MODEL.write().overwrite().save("models")
 
 # Create a DecisionTreeRegressor object
 DT = DecisionTreeRegressor()
@@ -224,7 +224,7 @@ DTR_RMSE = EVALUATOR.evaluate(DTR_PREDICTIONS, {EVALUATOR.metricName: 'rmse'})
 DTR_2 = EVALUATOR.evaluate(DTR_PREDICTIONS, {EVALUATOR.metricName: 'r2'})
 print "DTR RMSE: {}".format(DTR_RMSE)
 print "DTR R2: {}".format(DTR_2)
-DTR_MODEL.write().overwrite().save("model")
+DTR_MODEL.write().overwrite().save("models")
 
 # save the outputs
 PREDICTIONS.coalesce(1).select("prediction", 'label').write.mode("overwrite")\
